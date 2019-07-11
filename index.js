@@ -28,7 +28,7 @@ var con = mysql.createConnection(
 
 
   //----------------TestFunction--------------------
-  function FunctionTest(){
+  function test(){
       
     con.connect(function(err) {
         if (err) throw err;
