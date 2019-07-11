@@ -9,4 +9,19 @@ app.get('/',function(req,res){
 });
 
 app.listen(4762);
-console.log('4762 is the server port');
+console.log('4762 is the server');
+
+var mysql = require('mysql');
+var con = mysql.createConnection(
+    {
+        host:"localhost",
+        user:"root",
+        password:""
+
+    }
+);
+
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
