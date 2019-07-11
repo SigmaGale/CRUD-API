@@ -1,0 +1,19 @@
+{
+  "name": "mcdequiroz.github.io",
+  "version": "1.0.0",
+  "description": "Practical Exam for Questronix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SigmaGale/MCDeQuiroz.github.io.git"
+  },
+  "author": "Mark Chester De Quiroz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SigmaGale/MCDeQuiroz.github.io/issues"
+  },
+  "homepage": "https://github.com/SigmaGale/MCDeQuiroz.github.io#readme"
+}
