@@ -1,3 +1,5 @@
+//-------------EXPRESS------------//
+
 var express = require('express');
 var app = express();
 
@@ -11,17 +13,28 @@ app.get('/',function(req,res){
 app.listen(4762);
 console.log('4762 is the server');
 
+//----------------MYSQL CONNECTION-------------
 var mysql = require('mysql');
 var con = mysql.createConnection(
     {
         host:"localhost",
         user:"root",
-        password:""
+        password:"",
+        database:"inventory"
 
     }
 );
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
+
+
+  //----------------TestFunction--------------------
+  function FunctionTest(){
+      
+    con.connect(function(err) {
+        if (err) throw err;
+        con.query("SELECT * FROM items", function (err, result, fields) {
+          if (err) throw err;
+          console.log(result);
+        });
+      });
+}
