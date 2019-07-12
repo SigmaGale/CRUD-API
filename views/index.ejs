@@ -5,6 +5,33 @@
     var data;
 </script>
 
+<style>
+    html {
+        
+    }
+    body{ 
+             
+            border: 1px solid;
+            margin: auto;           
+    }
+    h1{
+        text-align: center;
+    }
+
+    table{
+        border:1px solid;
+        margin: auto;
+        width: 60%;
+    }
+    
+    tr,td{
+        border:1px solid;
+    }
+
+    
+    
+</style>
+
 
 <html>
     <head>
@@ -12,23 +39,30 @@
         <title></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <style>
-            body    { padding-top:50px; }
-        </style>
+        
     </head>
+        
     
 
     <body>
-        
+
+        <form action="index.ejs" method="POST" enctype="application/x-www-form-urlencoded">
         <table>
-            <thead>INVENTORY</thead>
+            <tr><td>ID:</td><td><input type="text"></td></tr>
+            <tr><td>Name:<input type="text"></td></tr>
+            <tr><td> Quantity:<input type="text"></td></tr>
+            <tr><td>Amount:<input type="text"></td></tr>
+        </table>
+        </form>
+        <h1><%= message %></h1>
+        <table>
             <tr>
                 <th>ID</th> 
                 <th>NAME</th>
                 <th>QUANTITY</th>
                 <th>AMOUNT</th>
             </tr>
-            <h1><%= message %></h1>
+           
             <% for(var i=0; i < data.length; i++) { %>
                 <tr>
                   <td><%= data[i].id %> &nbsp;&nbsp;</td>
