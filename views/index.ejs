@@ -1,6 +1,14 @@
+
 <!DOCTYPE html>
+
+<script type="text/javascript">
+    var data;
+</script>
+
+
 <html>
     <head>
+    
         <title></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -11,7 +19,26 @@
     
 
     <body>
-        <p>Test</p>
+        
+        <table>
+            <thead>INVENTORY</thead>
+            <tr>
+                <th>ID</th> 
+                <th>NAME</th>
+                <th>QUANTITY</th>
+                <th>AMOUNT</th>
+            </tr>
+            <h1><%= message %></h1>
+            <% for(var i=0; i < data.length; i++) { %>
+                <tr>
+                  <td><%= data[i].id %> &nbsp;&nbsp;</td>
+                  <td><%= data[i].name %>&nbsp;&nbsp;</td>
+                  <td><%= data[i].qty %>&nbsp;&nbsp;</td>
+                  <td><%= data[i].amount %>&nbsp;&nbsp;</td>
+                </tr>
+             <% } %>
+        </table>
+
     </body>
     
 </html>
