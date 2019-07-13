@@ -3,6 +3,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
+var method
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
@@ -38,11 +39,7 @@ var con = mysql.createConnection(
 
     }
 );
-
-
-
-
-  //----------------Functions--------------------
+  //----------------API ENDPOINTS--------------------
 
 //HOMEPAGE
 app.get('/',(req,res)=>{
@@ -51,7 +48,7 @@ app.get('/',(req,res)=>{
         if (err) throw err;
          data = result;
         res.render('index.ejs',{
-          message:"GET"
+          message:""
         });
       });
   
@@ -59,23 +56,19 @@ app.get('/',(req,res)=>{
 
 
 //GET SPECIFIC ITEM
-app.get('/api/inventory/items/:id',(req,res) =>{
+app.get('/api/inventory/items/',(req,res) =>{
         
-        con.query("SELECT * FROM items WHERE id ='"+ req.params.id + "';", function (err, result, fields) {
+        con.query("SELECT * FROM items WHERE id ='"+ req.query.id + "';", function (err, result, fields) {
           if (err) throw err;
           res.send(result);
         });
+        
 
     });
 
 app.post('/api/inventory/items',(req,res) =>{
-  item = {
-    name: req.body.name,
-    qty:req.body.qty,
-    amount:req.body.amount
-    };
-console.log(req.body.name);
- con.query("INSERT INTO items(name,qty,amount) VALUES ('"+item.name+"',"+item.qty+","+item.amount+");",(err,result) =>{
+
+ con.query("INSERT INTO items(name,qty,amount) VALUES ('"+req.body.name+"',"+req.body.qty,+","+req.body.amount+");",(err,result) =>{
     if(err) throw err;
     data = result;
     res.render('index.ejs',{
@@ -86,14 +79,15 @@ console.log(req.body.name);
   
 });
 
-app.put('/api/inventory/items/:id',(req,res) =>{
+app.put('/api/inventory/items/',(req,res) =>{
 
   item = {
-    name: req.body.name,
-    qty:req.body.qty,
-    amount:req.body.amount
+    id:req.query.id,
+    name: req.query.name,
+    qty:req.query.qty,
+    amount:req.query.amount
     };
-  con.query("UPDATE items SET name='"+item.name+"',qty = '"+item.qty+"', amount = '"+item.amount+"' WHERE id = "+req.params.id+";"
+  con.query("UPDATE items SET name='"+item.name+"',qty = '"+item.qty+"', amount = '"+item.amount+"' WHERE id = "+req.query.id+";"
   ,(err,result) =>{
     data = result;
     res.render('index.ejs',{
@@ -103,9 +97,9 @@ app.put('/api/inventory/items/:id',(req,res) =>{
   );
 });
 
-app.delete('/api/inventory/items/:id',(req,res)=>{
+app.delete('/api/inventory/items/',(req,res)=>{
 
-  con.query("DELETE FROM items WHERE id = "+req.params.id,(err,result) =>{
+  con.query("DELETE FROM items WHERE id = "+req.query.id,(err,result) =>{
     if(err) throw err;
     data = result;
     res.render('index.ejs',{
