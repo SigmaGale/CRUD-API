@@ -60,7 +60,13 @@ app.get('/',(req,res)=>{
 app.get('/api/inventory/items/',(req,res) =>{
         
         con.query("SELECT * FROM items WHERE id ='"+ req.query.id + "';", function (err, result, fields) {
-          if (err) throw err;
+          if (err){
+            throw err;
+          }
+          if(result.length<=0)
+          {
+            res.send({message:"No ID matched:" + result.message}).status(404).end();
+          }
           res.send(result);
         });
         
@@ -119,8 +125,16 @@ app.put('/api/inventory/items/',(req,res) =>{
   con.query("UPDATE items SET name='"+item.name+"',qty = '"+item.qty+"', amount = '"+item.amount+"' WHERE id = "+req.query.id+";"
   ,(err,result) =>{
 
-    if(err) throw err;
-      res.send({message:"Update Success"});
+    if(err) {
+      res.send("Error handling input:" + err.code).status(404).end;
+      return;
+    }
+
+    if(result.fieldCount == 0){
+      res.send({message:"No rows matcheds:" + result.message});
+      return;
+    }
+      res.send({message:"Update Success: " + result.message});
     
   }
   );
