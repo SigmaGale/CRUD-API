@@ -3,7 +3,9 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
-var method
+
+
+
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
@@ -51,7 +53,6 @@ app.get('/',(req,res)=>{
           message:""
         });
       });
-  
 });
 
 
@@ -66,21 +67,49 @@ app.get('/api/inventory/items/',(req,res) =>{
 
     });
 
+//INSERT INTO DATABASE USING PUT
 app.post('/api/inventory/items',(req,res) =>{
+  
+  if(req.query.name.length <= 2)
+  {
+    res.send({message:"Name must be greater than 2 characters"});
+    return;
+  }
+  
+  if(req.query.qty <= 0)
+  {
 
- con.query("INSERT INTO items(name,qty,amount) VALUES ('"+req.body.name+"',"+req.body.qty,+","+req.body.amount+");",(err,result) =>{
-    if(err) throw err;
+    res.send({message:"Please input Quantity"});
+    return;
+  }
+  if(req.query.amount <= 0)
+  {
+    res.send({message:"Please input amount"});
+    return;
+  }
+ 
+  con.query("INSERT INTO items(name,qty,amount) VALUES ('"+req.query.name+"',"+req.query.qty+","+req.query.amount+");",(err,result) =>{
+    if(err) {
+      res.status(404).end();
+      throw err
+    
+    };
     data = result;
-    res.render('index.ejs',{
-      message:"INSERT SUCCESS"
-    });
+    
+      {
+        message: "INSERTED new Item" 
+      };
+
+    res.send({message:"Successully inserted"});
+    res.end();
     
   });
   
 });
-
+//UPDATE USING PUT
 app.put('/api/inventory/items/',(req,res) =>{
 
+  
   item = {
     id:req.query.id,
     name: req.query.name,
@@ -89,16 +118,21 @@ app.put('/api/inventory/items/',(req,res) =>{
     };
   con.query("UPDATE items SET name='"+item.name+"',qty = '"+item.qty+"', amount = '"+item.amount+"' WHERE id = "+req.query.id+";"
   ,(err,result) =>{
-    data = result;
-    res.render('index.ejs',{
-      message:"Update Success"
-    })
+
+    if(err) throw err;
+      res.send({message:"Update Success"});
+    
   }
   );
 });
 
+
+//DELETE USING DELETE
 app.delete('/api/inventory/items/',(req,res)=>{
 
+  if(req.query.id <= 0){
+    res.send('Please insert id')
+  }
   con.query("DELETE FROM items WHERE id = "+req.query.id,(err,result) =>{
     if(err) throw err;
     data = result;
