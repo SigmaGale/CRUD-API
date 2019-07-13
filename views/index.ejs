@@ -4,14 +4,15 @@
 <script type="text/javascript">
     var data;
     var method;
-    
 
+   
+/*
     function getMethod(){
         method = document.getElementById("method");
        let selectedMethod = method.options[method.selectedIndex].text;
        document.getElementsByTagName("form")[0].setAttribute("method",selectedMethod);
     }
-
+*/
 
    
 </script>
@@ -21,18 +22,21 @@
     body{ 
              
             border: 1px solid;
-            margin: auto;           
+            margin: 15px;           
     }
     h1{
         text-align: center;
     }
-
+    table{
+        width:100%;
+    }
     
     tr,td{
         border:1px solid;
     }
-    .formTable{
-        width:40%;
+
+    .changeLogDiv{
+        float: right;
     }
 
     
@@ -45,7 +49,11 @@
     
         <title></title>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
     </head>
         
@@ -53,7 +61,7 @@
 
     <body>
        <div>
-          
+          <!--
             <form action="api/inventory/items/" method="" enctype="application/x-www-form-urlencoded">
                 <table id="formTable">
                     <tr><td>METHOD:
@@ -70,27 +78,34 @@
                     <tr><td>Amount:</td><td><input  name ="amount"type="text"></td></tr>
                     <tr><td colspan="2"><input type="submit" value="submit"></td></tr>
                 </table>
-            </form>
+            </form>-->
         </div>
         <h1><%= message %></h1>
-        <table>
-            <tr>
-                <th>ID</th> 
-                <th>NAME</th>
-                <th>QUANTITY</th>
-                <th>AMOUNT</th>
-            </tr>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th> 
+                    <th scope="col">NAME</th>
+                    <th scope="col">QUANTITY</th>
+                    <th scope="col">AMOUNT</th>
+                </tr>
+            </thead>
            
             <% for(var i=0; i < data.length; i++) { %>
                 <tr>
-                  <td><%= data[i].id %> &nbsp;&nbsp;</td>
+                  <th scope="row"><%= data[i].id %> &nbsp;&nbsp;</th>
                   <td><%= data[i].name %>&nbsp;&nbsp;</td>
                   <td><%= data[i].qty %>&nbsp;&nbsp;</td>
                   <td><%= data[i].amount %>&nbsp;&nbsp;</td>
                 </tr>
              <% } %>
         </table>
-
+       <footer>
+           <div class="alert alert-dark" role="alert">
+            <p type="text">Note: Access to API ../api/inventory/items/</p>
+            <p>Note: use POSTMAN to test RESTful API</p>
+        </div>
+       </footer>
     </body>
     
 </html>
